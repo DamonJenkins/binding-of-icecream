@@ -19,7 +19,7 @@ public class BulletTest : MonoBehaviour
     {
         bulletInfo = GetComponentInParent<PlayerCtrl>().GetCurrentBulletType();
         direction = GetComponentInParent<PlayerCtrl>().GetShotDirection();
-        owner = transform.parent.gameObject;
+        owner = transform.parent.GetComponentInChildren<SpriteRenderer>().gameObject;
 
         Destroy(gameObject, bulletInfo.Range/bulletInfo.MoveSpeed);
 
@@ -32,12 +32,13 @@ public class BulletTest : MonoBehaviour
        
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.transform.tag == "Enemy")
+        if (collision.transform.tag == "Enemy")
         {
             collision.transform.gameObject.GetComponent<EnemyScript>().OnHit(gameObject);
-        }else if(collision.transform.gameObject != owner)
+        }
+        else if (collision.transform.gameObject != owner)
         {
             Destroy(gameObject);
         }

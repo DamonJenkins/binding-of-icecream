@@ -29,7 +29,7 @@ public struct BulletParams
     public float MoveSpeed;
     public float Range;
     public int Damage;
-    public List<Effect> Effects;
+    public Effect[] Effects;
 }
 
 [System.Serializable]
@@ -81,40 +81,36 @@ public class PlayerCtrl : MonoBehaviour
     }
     //void switchGun(int gun);
    
-    void FireBullet(KeyCode dir)
+    void FireBullet()
     {
         if (ammoCurrent[bulletType] <= ammoConsumption[bulletType] || timers[bulletType] >= 0) return;
 
         ammoCurrent[bulletType] -= ammoConsumption[bulletType];
         timers[bulletType] = timerStarts[bulletType];
 
-        // DIRECTION
-        if (dir == m_Input.ShootR)
-        {
-            direction = Vector2.right;
-        }
-        else if (dir == m_Input.ShootL)
-        {
-            direction = Vector2.left;
-        }
-        else if (dir == m_Input.ShootUp)
-        {
-            direction = Vector2.up;
-        }
-        else if (dir == m_Input.ShootDown)
-        {
-            direction = Vector2.down;
-        }
-
         // CREATE
-        var bullet = Instantiate(BulletPrefab, transform.position, transform.rotation, transform);
+        var bullet = Instantiate(BulletPrefab, GetComponentInChildren<SpriteRenderer>().transform.position, transform.rotation, transform);
 
     }
     // Update is called once per frame
     void Update()
     {
+        //Movement
+
+        float velThisFrame = playerdata.spd;
+
+        if (Input.GetButton("Horizontal") && Input.GetButton("Vertical"))
+        {
+            velThisFrame *= 0.707f;
+        }
+
+        GetComponentInChildren<Rigidbody2D>().velocity = new Vector3(
+            Input.GetAxis("Horizontal"),
+            Input.GetAxis("Vertical")
+        ) * velThisFrame;
+
         //switch gun
-        if(Input.GetKeyDown(KeyCode.Alpha1))
+        if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             bulletType = 0;
         }
@@ -126,29 +122,25 @@ public class PlayerCtrl : MonoBehaviour
         {
             bulletType = 2;
         }
-      
-        // SHOOT
-        if (Input.GetKeyDown(m_Input.ShootR))
-        {
-            FireBullet(m_Input.ShootR);
-        }
 
-        if (Input.GetKeyDown(m_Input.ShootL))
+        // DIRECTION
+        if (Input.GetButton("FireX"))
         {
-            FireBullet(m_Input.ShootL);
+            direction = (Vector2.right * Input.GetAxis("FireX")).normalized;
+            FireBullet();
         }
-        if (Input.GetKeyDown(m_Input.ShootUp))
+        if (Input.GetButton("FireY"))
         {
-            FireBullet(m_Input.ShootUp);
-        }
-        if (Input.GetKeyDown(m_Input.ShootDown))
-        {
-
-            FireBullet(m_Input.ShootDown);
+            direction = (Vector2.up * Input.GetAxis("FireY")).normalized;
+            FireBullet();
         }
 
         for (int i = 0; i < 3; i++) {
             timers[i] -= Time.deltaTime;
+            if (i != bulletType){
+                ammoCurrent[i] += ammoRegenRate[i] * Time.deltaTime;
+                ammoCurrent[i] = Mathf.Min(ammoMax[i], ammoCurrent[i]);
+            }
         }
 
     }
