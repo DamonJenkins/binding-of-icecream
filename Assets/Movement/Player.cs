@@ -16,11 +16,15 @@ public class Player : MonoBehaviour
 
     // Update is called once per frame
     void Update(){
-        //float velThisFrame = moveSpeed;
+        float velThisFrame = moveSpeed;
 
-        transform.position += new Vector3(
+        if (Input.GetButton("Horizontal") && Input.GetButton("Vertical")) {
+            velThisFrame *= 0.707f;
+        }
+
+        GetComponentInChildren<Rigidbody2D>().velocity = new Vector3(
             Input.GetAxis("Horizontal"),
             Input.GetAxis("Vertical")
-        ) * moveSpeed * Time.deltaTime;
+        ) * velThisFrame;
     }
 }
