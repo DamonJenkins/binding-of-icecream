@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BulletTest : MonoBehaviour
 {
-    
+    //add bullet type?
     public int bspeed = 8;
     private int a = 0;
     private int b = 1;
