@@ -2,13 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public struct BulletParams
-{
-    public float MoveSpeed;
-    public float Range;
-    public int Damage;
-    public List<Effect> Effects;
-}
+
 
 public class BulletScript : MonoBehaviour
 {
