@@ -4,11 +4,8 @@ using UnityEngine;
 
 public class BulletTest : MonoBehaviour
 {
-    //add bullet type?
-    public int bspeed = 8;
-    private int a = 0;
-    private int b = 1;
 
+    public BulletParams bulletInfo;
 
     public GameObject owner { get; private set; }
 
@@ -16,26 +13,17 @@ public class BulletTest : MonoBehaviour
     private Vector2 direction;
 
     public Rigidbody2D rb;
-    public float speed = 8f;
-    public float lifetime = 1f;
-
-    public void Create(GameObject owner, Vector2 direction)
-    {
-        this.owner = owner;
-        this.direction = direction;
-    }
 
     // Use this for initialization
     void Start()
     {
+        bulletInfo = GetComponentInParent<PlayerCtrl>().GetCurrentBulletType();
+        direction = GetComponentInParent<PlayerCtrl>().GetShotDirection();
+        owner = transform.parent.GetComponentInChildren<SpriteRenderer>().gameObject;
 
-      
+        Destroy(gameObject, bulletInfo.Range/bulletInfo.MoveSpeed);
 
-
-
-        Destroy(this.gameObject, lifetime);
-
-        rb.velocity = direction * speed;
+        rb.velocity = direction * bulletInfo.MoveSpeed;
     }
 
     // Update is called once per frame
@@ -43,16 +31,16 @@ public class BulletTest : MonoBehaviour
     {
        
     }
-    void OnTriggerEnter2D(Collider2D c)
+
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-
-        Debug.Log("BULLET COLLIDE!!!!!");
-
-        if (c.gameObject == this.owner)
-            return;
-
-        GameObject.Destroy(this.gameObject);
-
-        
+        if (collision.transform.tag == "Enemy")
+        {
+            collision.transform.gameObject.GetComponent<EnemyScript>().OnHit(gameObject);
+        }
+        else if (collision.transform.gameObject != owner)
+        {
+            Destroy(gameObject);
+        }
     }
 }
