@@ -217,7 +217,7 @@ GameObject:
   - component: {fileID: 1476433822}
   m_Layer: 0
   m_Name: PlayerSprite
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -393,11 +393,11 @@ MonoBehaviour:
   BulletPrefab: {fileID: 1024669675226095881, guid: bbca455e024a02342a3dcde070877218,
     type: 3}
   timerStarts:
-  - 0.2
+  - 0.01
   - 0.4
   - 1
   Bullets:
-  - MoveSpeed: 8
+  - MoveSpeed: 5
     Range: 10
     Damage: 1
     Effects: []
@@ -410,13 +410,17 @@ MonoBehaviour:
     Damage: 1
     Effects: []
   ammoMax:
-  - 100
-  - 100
-  - 100
+  - 1000
+  - 200
+  - 40
+  ammoCurrent:
+  - 1000
+  - 200
+  - 40
   ammoRegenRate:
-  - 22
-  - 22
-  - 22
+  - 10
+  - 20
+  - 5
   ammoConsumption:
   - 1
   - 1

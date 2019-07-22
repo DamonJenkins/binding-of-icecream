@@ -56,11 +56,13 @@ public class PlayerCtrl : MonoBehaviour
 
     private float[] timers = { 0.0f, 0.0f, 0.0f };
     [SerializeField]
-    private float[] timerStarts = { 1.0f, 1.0f, 1.0f };
+    private float[] timerStarts = { 1.0f, 1.0f, 1.0f }; // fire rate
     [SerializeField]
-    private BulletParams[] Bullets;
+    private BulletParams[] Bullets; // set of different guns
+    // ammo data
     [SerializeField]
     private float[] ammoMax;
+    [SerializeField]
     private float[] ammoCurrent;
     [SerializeField]
     private float[] ammoRegenRate;
@@ -112,7 +114,9 @@ public class PlayerCtrl : MonoBehaviour
         //switch gun
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
+            //dot(beam)
             bulletType = 0;
+           
         }
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {

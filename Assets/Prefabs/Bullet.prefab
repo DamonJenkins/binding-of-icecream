@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 5060805202147208240}
   m_Layer: 0
   m_Name: Bullet
-  m_TagString: Untagged
+  m_TagString: PlayerBullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -94,10 +94,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01929af91120a314eb9a8c0dd57812cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bspeed: 8
+  bulletInfo:
+    MoveSpeed: 0
+    Range: 0
+    Damage: 0
+    Effects: []
+  ownertag: 
   rb: {fileID: 5060805202147208240}
-  speed: 8
-  lifetime: 1
 --- !u!58 &-870390704122971758
 CircleCollider2D:
   m_ObjectHideFlags: 0

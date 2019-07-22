@@ -8,7 +8,7 @@ public class BulletTest : MonoBehaviour
     public BulletParams bulletInfo;
 
     public GameObject owner { get; private set; }
-
+    public string ownertag;
 
     private Vector2 direction;
 
@@ -19,7 +19,7 @@ public class BulletTest : MonoBehaviour
     {
         bulletInfo = GetComponentInParent<PlayerCtrl>().GetCurrentBulletType();
         direction = GetComponentInParent<PlayerCtrl>().GetShotDirection();
-        owner = transform.parent.GetComponentInChildren<SpriteRenderer>().gameObject;
+        ownertag = transform.parent.tag;
 
         Destroy(gameObject, bulletInfo.Range/bulletInfo.MoveSpeed);
 
@@ -38,8 +38,11 @@ public class BulletTest : MonoBehaviour
         {
             collision.transform.gameObject.GetComponent<EnemyScript>().OnHit(gameObject);
         }
-        else if (collision.transform.gameObject != owner)
+        else if (collision.transform.tag != ownertag && collision.transform.tag != "PlayerBullet")
         {
+            print(ownertag);
+            print(collision.transform.tag);
+            print("hit");
             Destroy(gameObject);
         }
     }
