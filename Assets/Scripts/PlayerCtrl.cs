@@ -70,7 +70,9 @@ public class PlayerCtrl : MonoBehaviour
     private float[] ammoConsumption;
 
 
-    
+    //ammo bar
+    [SerializeField]
+    public Image beambar, machinegunbar, riflebar; 
     // Start is called before the first frame update
     void Start()
     {
@@ -146,6 +148,11 @@ public class PlayerCtrl : MonoBehaviour
                 ammoCurrent[i] = Mathf.Min(ammoMax[i], ammoCurrent[i]);
             }
         }
+        //ammo hud test
+        beambar.fillAmount = ammoCurrent[0] / ammoMax[0];
+        machinegunbar.fillAmount = ammoCurrent[1] / ammoMax[1];
+        riflebar.fillAmount = ammoCurrent[2] / ammoMax[2];
+
 
     }
 
