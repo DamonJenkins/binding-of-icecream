@@ -496,20 +496,20 @@ MonoBehaviour:
     type: 3}
   timerStarts:
   - 0.01
-  - 0.4
+  - 0.3
   - 1
   Bullets:
   - MoveSpeed: 5
-    Range: 10
+    Range: 12
     Damage: 1
     Effects: []
   - MoveSpeed: 8
-    Range: 10
-    Damage: 1
+    Range: 8
+    Damage: 28
     Effects: []
-  - MoveSpeed: 8
-    Range: 10
-    Damage: 1
+  - MoveSpeed: 14
+    Range: 15
+    Damage: 120
     Effects: []
   ammoMax:
   - 1000
