@@ -147,12 +147,18 @@ public class PlayerCtrl : MonoBehaviour
                 ammoCurrent[i] += ammoRegenRate[i] * Time.deltaTime;
                 ammoCurrent[i] = Mathf.Min(ammoMax[i], ammoCurrent[i]);
             }
+            //uncomment this to enable ammo regen for current gun
+            //if (i == bulletType)
+            //{
+            //    ammoCurrent[i] += (ammoRegenRate[i] * Time.deltaTime * 0.5f);
+            //    ammoCurrent[i] = Mathf.Min(ammoMax[i], ammoCurrent[i]);
+            //}
         }
         //ammo hud test
         beambar.fillAmount = ammoCurrent[0] / ammoMax[0];
         machinegunbar.fillAmount = ammoCurrent[1] / ammoMax[1];
         riflebar.fillAmount = ammoCurrent[2] / ammoMax[2];
-
+        
 
     }
 
