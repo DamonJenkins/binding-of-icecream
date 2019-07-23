@@ -7,17 +7,24 @@ public class EnemyScript : MonoBehaviour
     [SerializeField]
     private int health;
 
+    [SerializeField]
+    private Transform playerTransform;
+
+    private Rigidbody2D rb;
     private List<Effect> CurrentEffects;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        rb = GetComponent<Rigidbody2D>();
+        CurrentEffects = new List<Effect>();
     }
 
     // Update is called once per frame
     void Update()
     {
+
+        rb.velocity = new Vector3(playerTransform.position.x - transform.position.x, playerTransform.position.y - transform.position.y).normalized * 2.0f;
 
         for( int i = 0; i < CurrentEffects.Count;)
         {
