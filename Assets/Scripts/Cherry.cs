@@ -1,19 +1,53 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-
 using UnityEngine;
-
 
 public class Cherry : Effect
 {
     string cherryName;
     int cherryDamage; 
     float cherryRadius;
-    public Cherry(string _cherryName, int _cherryDamage, float _cherryRadius, float duration) : base (duration)
+    public Cherry(int _cherryDamage, float _cherryRadius, float duration) : base (duration)
     {
-        cherryName = _cherryName;
         cherryDamage = _cherryDamage;
         cherryRadius = _cherryRadius;
+    }
+
+    public Cherry(Cherry other) : base(other.GetDuration())
+    {
+        cherryDamage = other.cherryDamage;
+        cherryRadius = other.cherryRadius;
+        cherryName = other.cherryName;
+    }
+
+    public void SetName(string _cherryName)
+    {
+        cherryName = _cherryName;
+    }
+
+    public void SetCherryDamage(int _cherryDamage)
+    {
+        cherryDamage = _cherryDamage;
+    }
+
+    public void SetCherryRadius(float _cherryRadius)
+    {
+        cherryRadius = _cherryRadius;
+    }
+
+    public string GetName()
+    {
+        return cherryName;
+    }
+
+    public int GetCherryDamage()
+    {
+        return cherryDamage;
+    }
+
+    public float GetCherryRadius()
+    {
+        return cherryRadius;
     }
 
     public override void OnDestroy()
