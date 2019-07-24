@@ -55,9 +55,9 @@ public class PlayerCtrl : MonoBehaviour
 
     private Vector2 direction = Vector2.right;
 
-	[SerializeField]
-	private float invulnerabilityTime;
-	private float invulnTimer = 0.0f;
+    [SerializeField]
+    private float invulnerabilityTime;
+    private float invulnTimer = 0.0f;
 
     private float[] timers = { 0.0f, 0.0f, 0.0f };
     [SerializeField]
@@ -81,17 +81,17 @@ public class PlayerCtrl : MonoBehaviour
     Cherry c;
     //ammo bar
     [SerializeField]
-    public Image beambar, machinegunbar, riflebar; 
+    public Image beambar, machinegunbar, riflebar;
     // Start is called before the first frame update
     void Start()
     {
         ammoCurrent = new float[ammoMax.Length];
-        for(int i = 0; i < ammoMax.Length; i++)
+        for (int i = 0; i < ammoMax.Length; i++)
         {
             ammoCurrent[i] = ammoMax[i];
         }
     }
-   
+
     void FireBullet()
     {
         if (ammoCurrent[bulletType] < ammoConsumption[bulletType] || timers[bulletType] >= 0) return;
@@ -131,7 +131,7 @@ public class PlayerCtrl : MonoBehaviour
         {
             //dot(beam)
             bulletType = 0;
-           
+
         }
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
@@ -140,10 +140,6 @@ public class PlayerCtrl : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha3))
         {
             bulletType = 2;
-        }
-        if(Input.GetKeyDown(KeyCode.Alpha4))
-        {
-            bulletType = 3;
         }
 
         // DIRECTION
@@ -156,14 +152,7 @@ public class PlayerCtrl : MonoBehaviour
                 Quaternion spreadangle = Quaternion.Euler(0.0f, 0.0f, Random.Range(-10.0f, 10.0f));
                 direction = spreadangle * direction;
             }
-            if (bulletType != 3)
-            {
-                FireBullet();
-            }
-            else
-            {
-                spawnCherry();
-            }
+            FireBullet();
         }
         if (Input.GetButton("FireY"))
         {
@@ -173,14 +162,7 @@ public class PlayerCtrl : MonoBehaviour
                 Quaternion spreadangle = Quaternion.Euler(0.0f, 0.0f, Random.Range(-10.0f, 10.0f));
                 direction = spreadangle * direction;
             }
-            if (bulletType != 3)
-            {
-                FireBullet();
-            }
-            else
-            {
-                spawnCherry();
-            }
+            FireBullet();
         }
 
         if (Input.GetButton("Horizontal"))
@@ -200,11 +182,12 @@ public class PlayerCtrl : MonoBehaviour
             }
         }
 
-		invulnTimer -= Time.deltaTime;
+        invulnTimer -= Time.deltaTime;
 
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 3; i++)
+        {
             timers[i] -= Time.deltaTime;
-            if( timers[i] < -ammoRegenDelay[i])
+            if (timers[i] < -ammoRegenDelay[i])
             {
                 ammoCurrent[i] += (ammoRegenRate[i] * Time.deltaTime * 0.5f);
                 ammoCurrent[i] = Mathf.Min(ammoMax[i], ammoCurrent[i]);
@@ -214,7 +197,7 @@ public class PlayerCtrl : MonoBehaviour
         beambar.fillAmount = ammoCurrent[0] / ammoMax[0];
         machinegunbar.fillAmount = ammoCurrent[1] / ammoMax[1];
         riflebar.fillAmount = ammoCurrent[2] / ammoMax[2];
-        
+
 
     }
 
@@ -230,14 +213,14 @@ public class PlayerCtrl : MonoBehaviour
 
     public void DealDamage(float damage)
     {
-		if (invulnTimer <= 0.0f)
-		{
-			health -= damage;
-			invulnTimer = invulnerabilityTime;
-			Debug.Log(health);
+        if (invulnTimer <= 0.0f)
+        {
+            health -= damage;
+            invulnTimer = invulnerabilityTime;
+            Debug.Log(health);
 
-			//TODO: Add animation
-		}
-	}
+            //TODO: Add animation
+        }
+    }
 
 }
