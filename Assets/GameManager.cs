@@ -6,7 +6,9 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField]
     private List<GameObject> roomPrefabs;
+    [SerializeField]
     private GameObject currentRoom;
+    private int currRoomNumber = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -21,7 +23,13 @@ public class GameManager : MonoBehaviour
     }
 
     public void ChangeRoom() {
-        Destroy(currentRoom);
-        currentRoom = Instantiate(roomPrefabs[Random.Range(0, roomPrefabs.Count)]);
+        if (currRoomNumber < roomPrefabs.Count)
+        {
+            Destroy(currentRoom);
+            currentRoom = Instantiate(roomPrefabs[++currRoomNumber]);
+        }
+        else {
+            //TODO: Win
+        }
     }
 }
