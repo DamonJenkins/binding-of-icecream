@@ -6,7 +6,7 @@ public class EnemyScript : MonoBehaviour
 {
     [SerializeField]
     private int health;
-    
+
     private List<Effect> CurrentEffects;
 
     // Start is called before the first frame update
@@ -19,13 +19,13 @@ public class EnemyScript : MonoBehaviour
     void Update()
     {
 
-        for( int i = 0; i < CurrentEffects.Count;)
+        for (int i = 0; i < CurrentEffects.Count;)
         {
             //Perform effect action
             CurrentEffects[i].Update(GetComponent<EnemyScript>());
 
             //Remove effect if expired
-            if( CurrentEffects[i].GetDuration() <= 0.0f)
+            if (CurrentEffects[i].GetDuration() <= 0.0f)
             {
                 CurrentEffects[i].OnDestroy();
                 CurrentEffects.RemoveAt(i);
@@ -37,7 +37,7 @@ public class EnemyScript : MonoBehaviour
         }
 
         //Destroy enemy
-        if( health <= 0)
+        if (health <= 0)
         {
             Destroy(gameObject);
         }
@@ -51,15 +51,20 @@ public class EnemyScript : MonoBehaviour
         BulletScript bulletScript = bullet.GetComponent<BulletScript>();
 
         //Deal damage
-        health -= bulletScript.bulletInfo.Damage;
+        DealDamage(bulletScript.bulletInfo.Damage);
 
         //Add all effects
-        foreach(Effect e in bulletScript.bulletInfo.Effects)
+        foreach (Effect e in bulletScript.bulletInfo.Effects)
         {
             CurrentEffects.Add(e);
         }
         //Remove bullet
         Destroy(bullet);
+    }
+
+    public void DealDamage(int damage)
+    {
+        health -= damage;
     }
 
 }

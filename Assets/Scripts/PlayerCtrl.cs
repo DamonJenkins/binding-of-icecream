@@ -37,7 +37,7 @@ public class CharaData
 {
 
     //public int charaset;
-    public float hp = 500;
+    public float maxHealth = 500;
     public float dmg;
     public float spd;
     public int guntype = 1;
@@ -48,6 +48,7 @@ public class PlayerCtrl : MonoBehaviour
 {
     public CharaData playerdata;
     public InputData m_Input;
+    float health;
     //Shoot
     public BulletScript BulletPrefab;
     private int bulletType = 0;
@@ -97,8 +98,22 @@ public class PlayerCtrl : MonoBehaviour
         timers[bulletType] = timerStarts[bulletType];
 
         // CREATE
-        var bullet = Instantiate(BulletPrefab, GetComponentInChildren<SpriteRenderer>().transform.position, transform.rotation, transform);
+        if (bulletType != 1)
+        {
+            var bullet = Instantiate(BulletPrefab, GetComponentInChildren<SpriteRenderer>().transform.position, transform.rotation, transform);
+        }
+        
+         else
+        {
+            Vector3 firespread = GetComponentInChildren<SpriteRenderer>().transform.position;
+            firespread.x += Random.Range(-0.3f, 0.3f);
+            firespread.y += Random.Range(-0.3f, 0.3f);
+            Vector3 fireangle = GetComponentInChildren<SpriteRenderer>().transform.rotation.eulerAngles;
+            fireangle.x += Random.Range(-0.4f, 0.4f);
+            fireangle.y += Random.Range(-0.4f, 0.4f);
 
+            var bullet = Instantiate(BulletPrefab, firespread,Quaternion.Euler(firespread), transform);
+        }
     }
     // Update is called once per frame
     void Update()
@@ -137,11 +152,31 @@ public class PlayerCtrl : MonoBehaviour
         if (Input.GetButton("FireX"))
         {
             direction = (Vector2.right * Input.GetAxis("FireX")).normalized;
+
+            //if(bulletType == 1)
+            //{
+            //   direction.y += Random.Range(-0.4f,0.4f);
+            //    //direction = direction.normalized;
+            //}
+            if (bulletType == 1)
+            {
+                Quaternion spreadangle = Quaternion.Euler(0.0f, 0.0f, Random.Range(-10.0f, 10.0f));
+                direction = spreadangle * direction;
+                //direction.x += Random.Range(-0.4f, 0.4f);
+                //direction = direction.normalized;
+            }
             FireBullet();
         }
         if (Input.GetButton("FireY"))
         {
             direction = (Vector2.up * Input.GetAxis("FireY")).normalized;
+            if (bulletType == 1)
+            {
+                Quaternion spreadangle = Quaternion.Euler(0.0f, 0.0f, Random.Range(-10.0f, 10.0f));
+                direction = spreadangle * direction;
+                //direction.x += Random.Range(-0.4f, 0.4f);
+                //direction = direction.normalized;
+            }
             FireBullet();
         }
 
@@ -186,6 +221,11 @@ public class PlayerCtrl : MonoBehaviour
     public Vector2 GetShotDirection()
     {
         return direction;
+    }
+
+    public void DealDamage(float damage)
+    {
+        health -= damage;
     }
 
 }

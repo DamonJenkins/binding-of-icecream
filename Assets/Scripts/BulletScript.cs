@@ -23,7 +23,8 @@ public class BulletScript : MonoBehaviour
 
         Destroy(gameObject, bulletInfo.Range/bulletInfo.MoveSpeed);
 
-        rb.velocity = direction * bulletInfo.MoveSpeed;
+        rb.velocity =  direction * bulletInfo.MoveSpeed;
+       
     }
 
     // Update is called once per frame
