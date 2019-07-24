@@ -25,6 +25,31 @@ public class Cherry : Effect
         cherryName = _cherryName;
     }
 
+    public void SetCherryDamage(int _cherryDamage)
+    {
+        cherryDamage = _cherryDamage;
+    }
+
+    public void SetCherryRadius(float _cherryRadius)
+    {
+        cherryRadius = _cherryRadius;
+    }
+
+    public string GetName()
+    {
+        return cherryName;
+    }
+
+    public int GetCherryDamage()
+    {
+        return cherryDamage;
+    }
+
+    public float GetCherryRadius()
+    {
+        return cherryRadius;
+    }
+
     public override void OnDestroy()
     {
         Vector3 self = GameObject.Find(cherryName).transform.position;
