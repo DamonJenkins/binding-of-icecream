@@ -16,9 +16,9 @@ public class Spikes : MonoBehaviour{
     }
 
 	void OnTriggerStay2D(Collider2D collider){
-		if (collider.name == "PlayerCollider") {
-            //Hurt the player
-
+		if (collider.name == "PlayerSprite") {
+			//Hurt the player
+			GameObject.Find("Player").GetComponent<PlayerCtrl>().DealDamage(50);
 		}
 	}
 

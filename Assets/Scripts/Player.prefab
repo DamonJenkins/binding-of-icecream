@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerdata:
-    hp: 500
+    maxHealth: 500
     dmg: 0
     spd: 4
     guntype: 1
@@ -61,6 +61,7 @@ MonoBehaviour:
     ShootDown: 0
   BulletPrefab: {fileID: 1024669675226095881, guid: bbca455e024a02342a3dcde070877218,
     type: 3}
+  invulnerabilityTime: 0.5
   timerStarts:
   - 0.05
   - 0.35
