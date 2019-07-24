@@ -19,7 +19,7 @@ public class EnemyFollow : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
-        rb.velocity = (playerTransform.position - transform.position).normalized * MoveSpeed;
+    {                                             //Offset to fix wall collisions
+        rb.velocity = (playerTransform.position + new Vector3(0.1f, 0.1f) - transform.position).normalized * MoveSpeed;
     }
 }

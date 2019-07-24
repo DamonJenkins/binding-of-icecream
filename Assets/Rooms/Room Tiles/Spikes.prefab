@@ -24,6 +24,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Spikes
       objectReference: {fileID: 0}
+    - target: {fileID: 4209853466754679263, guid: 1b8d771b041e3b94a8f8396e6f65d1d2,
+        type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     - target: {fileID: 4209853466754679262, guid: 1b8d771b041e3b94a8f8396e6f65d1d2,
         type: 3}
       propertyPath: m_LocalPosition.x

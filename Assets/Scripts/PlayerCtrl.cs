@@ -49,7 +49,7 @@ public class PlayerCtrl : MonoBehaviour
     public CharaData playerdata;
     public InputData m_Input;
     //Shoot
-    public BulletTest BulletPrefab;
+    public BulletScript BulletPrefab;
     private int bulletType = 0;
 
     private Vector2 direction = Vector2.right;
@@ -68,7 +68,11 @@ public class PlayerCtrl : MonoBehaviour
     private float[] ammoRegenRate;
     [SerializeField]
     private float[] ammoConsumption;
+    [SerializeField]
+    private float[] ammoRegenDelay;
 
+    [SerializeField]
+    private Sprite[] dirSprites;
 
     //ammo bar
     [SerializeField]
@@ -87,7 +91,7 @@ public class PlayerCtrl : MonoBehaviour
    
     void FireBullet()
     {
-        if (ammoCurrent[bulletType] <= ammoConsumption[bulletType] || timers[bulletType] >= 0) return;
+        if (ammoCurrent[bulletType] < ammoConsumption[bulletType] || timers[bulletType] >= 0) return;
 
         ammoCurrent[bulletType] -= ammoConsumption[bulletType];
         timers[bulletType] = timerStarts[bulletType];
@@ -122,10 +126,10 @@ public class PlayerCtrl : MonoBehaviour
             velThisFrame *= 0.707f;
         }
 
-        GetComponentInChildren<Rigidbody2D>().velocity = new Vector3(
+        GetComponentInChildren<Rigidbody2D>().AddForce(new Vector2(
             Input.GetAxis("Horizontal"),
             Input.GetAxis("Vertical")
-        ) * velThisFrame;
+        ) * velThisFrame * 50.0f);
 
         //switch gun
         if (Input.GetKeyDown(KeyCode.Alpha1))
@@ -175,18 +179,30 @@ public class PlayerCtrl : MonoBehaviour
             FireBullet();
         }
 
+        if (Input.GetButton("Horizontal"))
+        {
+            GetComponentInChildren<SpriteRenderer>().sprite = dirSprites[1];
+            GetComponentInChildren<SpriteRenderer>().flipX = Input.GetAxis("Horizontal") < 0.0f;
+        }
+        if (Input.GetButton("Vertical"))
+        {
+            if (Input.GetAxis("Vertical") > 0.0f)
+            {
+                GetComponentInChildren<SpriteRenderer>().sprite = dirSprites[0];
+            }
+            else
+            {
+                GetComponentInChildren<SpriteRenderer>().sprite = dirSprites[2];
+            }
+        }
+
         for (int i = 0; i < 3; i++) {
             timers[i] -= Time.deltaTime;
-            if (i != bulletType){
-                ammoCurrent[i] += ammoRegenRate[i] * Time.deltaTime;
+            if( timers[i] < -ammoRegenDelay[i])
+            {
+                ammoCurrent[i] += (ammoRegenRate[i] * Time.deltaTime * 0.5f);
                 ammoCurrent[i] = Mathf.Min(ammoMax[i], ammoCurrent[i]);
             }
-            //uncomment this to enable ammo regen for current gun
-            //if (i == bulletType)
-            //{
-            //    ammoCurrent[i] += (ammoRegenRate[i] * Time.deltaTime * 0.5f);
-            //    ammoCurrent[i] = Mathf.Min(ammoMax[i], ammoCurrent[i]);
-            //}
         }
         //ammo hud test
         beambar.fillAmount = ammoCurrent[0] / ammoMax[0];
