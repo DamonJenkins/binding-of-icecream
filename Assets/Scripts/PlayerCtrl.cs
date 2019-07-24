@@ -55,6 +55,10 @@ public class PlayerCtrl : MonoBehaviour
 
     private Vector2 direction = Vector2.right;
 
+	[SerializeField]
+	private float invulnerabilityTime;
+	private float invulnTimer = 0.0f;
+
     private float[] timers = { 0.0f, 0.0f, 0.0f };
     [SerializeField]
     private float[] timerStarts = { 1.0f, 1.0f, 1.0f }; // fire rate
@@ -197,6 +201,8 @@ public class PlayerCtrl : MonoBehaviour
             }
         }
 
+		invulnTimer -= Time.deltaTime;
+
         for (int i = 0; i < 3; i++) {
             timers[i] -= Time.deltaTime;
             if( timers[i] < -ammoRegenDelay[i])
@@ -225,7 +231,14 @@ public class PlayerCtrl : MonoBehaviour
 
     public void DealDamage(float damage)
     {
-        health -= damage;
-    }
+		if (invulnTimer <= 0.0f)
+		{
+			health -= damage;
+			invulnTimer = invulnerabilityTime;
+			Debug.Log(health);
+
+			//TODO: Add animation
+		}
+	}
 
 }
