@@ -162,10 +162,26 @@ public class PlayerCtrl : MonoBehaviour
             }
         }
 
-        for (int i = 0; i < 3; i++)
+        if (Input.GetButton("Horizontal"))
         {
+            GetComponentInChildren<SpriteRenderer>().sprite = dirSprites[1];
+            GetComponentInChildren<SpriteRenderer>().flipX = Input.GetAxis("Horizontal") < 0.0f;
+        }
+        if (Input.GetButton("Vertical"))
+        {
+            if (Input.GetAxis("Vertical") > 0.0f)
+            {
+                GetComponentInChildren<SpriteRenderer>().sprite = dirSprites[0];
+            }
+            else
+            {
+                GetComponentInChildren<SpriteRenderer>().sprite = dirSprites[2];
+            }
+        }
+
+        for (int i = 0; i < 3; i++) {
             timers[i] -= Time.deltaTime;
-            if (timers[i] < -ammoRegenDelay[i])
+            if( timers[i] < -ammoRegenDelay[i])
             {
                 ammoCurrent[i] += (ammoRegenRate[i] * Time.deltaTime * 0.5f);
                 ammoCurrent[i] = Mathf.Min(ammoMax[i], ammoCurrent[i]);
