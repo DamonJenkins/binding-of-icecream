@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BulletTest : MonoBehaviour
+public class BulletScript : MonoBehaviour
 {
 
     public BulletParams bulletInfo;
@@ -38,11 +38,8 @@ public class BulletTest : MonoBehaviour
         {
             collision.transform.gameObject.GetComponent<EnemyScript>().OnHit(gameObject);
         }
-        else if (collision.transform.tag != ownertag && collision.transform.tag != "PlayerBullet")
+        else if (collision.transform.tag == "Obstacle")
         {
-            print(ownertag);
-            print(collision.transform.tag);
-            print("hit");
             Destroy(gameObject);
         }
     }
