@@ -6,17 +6,14 @@ using UnityEngine.Sprites;
 using UnityEngine.UI;
 public class MenuScr : MonoBehaviour
 {
-    public GameObject Control;
+    public Image Control;
     // Start is called before the first frame update
-    public KeyCode Return;
+
 
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(Return))
-        {
-            Control.SetActive(false);
-        }
+        
     }
 
     public void StartGame()
@@ -25,11 +22,10 @@ public class MenuScr : MonoBehaviour
     }
     public void ExitGame()
     {
-        Application.Quit();
+        ExitGame();
     }
     public void ShowCtrl()
     {
-        Control.SetActive(true);
+        Control.enabled = !Control.enabled;
     }
-
 }
