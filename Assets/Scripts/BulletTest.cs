@@ -24,8 +24,7 @@ public class BulletTest : MonoBehaviour
         Destroy(gameObject, bulletInfo.Range/bulletInfo.MoveSpeed);
 
         rb.velocity =  direction * bulletInfo.MoveSpeed;
-        print(direction.x);
-        print(direction.y);
+       
     }
 
     // Update is called once per frame
