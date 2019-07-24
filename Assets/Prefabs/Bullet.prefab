@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 5060805202147208240}
   m_Layer: 0
   m_Name: Bullet
-  m_TagString: Untagged
+  m_TagString: PlayerBullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -27,13 +27,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1024669675226095882}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0.003490667, y: 0.0026179727, z: -0.000009138557, w: 0.9999905}
   m_LocalPosition: {x: -5.94, y: 3.66, z: -0.1}
   m_LocalScale: {x: 5.5280876, y: 2.9095197, z: 2.9095197}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0.4, y: 0.3, z: 0}
 --- !u!212 &1024669675226095880
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -94,10 +94,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01929af91120a314eb9a8c0dd57812cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bspeed: 8
+  bulletInfo:
+    MoveSpeed: 0
+    Range: 0
+    Damage: 0
+    Effects: []
+  ownertag: 
   rb: {fileID: 5060805202147208240}
-  speed: 8
-  lifetime: 1
 --- !u!58 &-870390704122971758
 CircleCollider2D:
   m_ObjectHideFlags: 0
