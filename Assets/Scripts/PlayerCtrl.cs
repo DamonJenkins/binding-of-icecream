@@ -37,7 +37,7 @@ public class CharaData
 {
 
     //public int charaset;
-    public float hp = 500;
+    public float maxHealth = 500;
     public float dmg;
     public float spd;
     public int guntype = 1;
@@ -48,6 +48,7 @@ public class PlayerCtrl : MonoBehaviour
 {
     public CharaData playerdata;
     public InputData m_Input;
+    float health;
     //Shoot
     public BulletScript BulletPrefab;
     private int bulletType = 0;
@@ -220,6 +221,11 @@ public class PlayerCtrl : MonoBehaviour
     public Vector2 GetShotDirection()
     {
         return direction;
+    }
+
+    public void DealDamage(float damage)
+    {
+        health -= damage;
     }
 
 }

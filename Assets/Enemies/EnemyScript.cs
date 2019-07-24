@@ -51,7 +51,7 @@ public class EnemyScript : MonoBehaviour
         BulletScript bulletScript = bullet.GetComponent<BulletScript>();
 
         //Deal damage
-        health -= bulletScript.bulletInfo.Damage;
+        DealDamage(bulletScript.bulletInfo.Damage);
 
         //Add all effects
         foreach (Effect e in bulletScript.bulletInfo.Effects)
@@ -60,6 +60,11 @@ public class EnemyScript : MonoBehaviour
         }
         //Remove bullet
         Destroy(bullet);
+    }
+
+    public void DealDamage(int damage)
+    {
+        health -= damage;
     }
 
 }
