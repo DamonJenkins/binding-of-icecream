@@ -1,18 +1,15 @@
 ﻿using System.Collections;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Cherry : Effect
 {
-    
-    Vector2 position;
-    float radius = 2.2f;
-    bool boomed = false;
-    public Cherry(Vector3 CherryPos,float duration) : base (duration)
+    int cherryDamage;
+    float cherryRadius;
+    public Cherry(GameObject owner, int _cherryDamage, float _cherryRadius, float duration) : base(duration, owner)
     {
-        position.x = CherryPos.x;
-        position.y = CherryPos.y;
+        cherryDamage = _cherryDamage;
+        cherryRadius = _cherryRadius;
     }
 
     public Cherry(Cherry other) : base(other.GetDuration(), other.GetOwner())
@@ -21,61 +18,48 @@ public class Cherry : Effect
         cherryRadius = other.cherryRadius;
     }
 
-    // Update is called once per frame
-    void Update()
+
+
+    public void SetCherryDamage(int _cherryDamage)
     {
-       
-    }
-    //void Boom()
-    //(
-        
-    //}
-}
-
-    int cherryDamage; 
-    float cherryRadius;
-    public Cherry(GameObject owner, int _cherryDamage, float _cherryRadius, float duration) : base (duration, owner)
         cherryDamage = _cherryDamage;
+    }
+
+    public void SetCherryRadius(float _cherryRadius)
+    {
         cherryRadius = _cherryRadius;
-   
-
-    public void SetCherryDamage(int _cherryDamage)
-    {
-        cherryDamage = _cherryDamage;
-
-    public void SetCherryRadius(float _cherryRadius)
-    {
-        cherryRadius = _cherryRadius;
     }
 
-    
 
-    public int GetCherryDamage()
-    {
-        return cherryDamage;
+
+    public int GetCherryDamage()
+    {
+        return cherryDamage;
     }
 
-    public float GetCherryRadius()
-    {
-        return cherryRadius;
+    public float GetCherryRadius()
+    {
+        return cherryRadius;
     }
 
-    public override void OnDestroy()
-    {
-        Vector3 self = owner.transform.position;
-        foreach(GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy"))
-        {
-            if( Vector3.Distance(self, enemy.transform.position) < cherryRadius)
-            {
-                enemy.GetComponent<EnemyScript>().DealDamage(cherryDamage);
-            }
-        }
-
-        foreach (GameObject player in GameObject.FindGameObjectsWithTag("Player"))
-        {
-            if (Vector3.Distance(self, player.transform.GetChild(0).transform.position) < cherryRadius)
-            {
-                player.GetComponent<PlayerCtrl>().DealDamage(cherryDamage);
-            }
-        }
+    public override void OnDestroy()
+    {
+        Vector3 self = owner.transform.position;
+        foreach (GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy"))
+        {
+            if (Vector3.Distance(self, enemy.transform.position) < cherryRadius)
+            {
+                enemy.GetComponent<EnemyScript>().DealDamage(cherryDamage);
+            }
+        }
+
+        foreach (GameObject player in GameObject.FindGameObjectsWithTag("Player"))
+        {
+            if (Vector3.Distance(self, player.transform.GetChild(0).transform.position) < cherryRadius)
+            {
+                player.GetComponent<PlayerCtrl>().DealDamage(cherryDamage);
+            }
+        }
     }
+
+}
