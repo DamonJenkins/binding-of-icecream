@@ -20,5 +20,5 @@ public class Effect
     {
         return TimeLeft;
     }
-
+   
 }
