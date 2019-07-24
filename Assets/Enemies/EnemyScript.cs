@@ -47,7 +47,7 @@ public class EnemyScript : MonoBehaviour
     public void OnHit(GameObject bullet)
     {
 
-        BulletScript bulletScript = bullet.GetComponent<BulletScript>();
+        BulletTest bulletScript = bullet.GetComponent<BulletTest>();
 
         //Deal damage
         health -= bulletScript.bulletInfo.Damage;
