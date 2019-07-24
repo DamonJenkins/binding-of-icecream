@@ -1,8 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 
-public class Spikes : MonoBehaviour{
+public class ReturnToMenu : MonoBehaviour
+{
+	private float timer = 4.0f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -12,14 +16,10 @@ public class Spikes : MonoBehaviour{
     // Update is called once per frame
     void Update()
     {
-        
-    }
+		timer -= Time.deltaTime;
 
-	void OnTriggerStay2D(Collider2D collider){
-		if (collider.name == "PlayerSprite") {
-			//Hurt the player
-			GameObject.Find("Player").GetComponent<PlayerCtrl>().DealDamage(50);
+		if (timer <= 0.0f) {
+			SceneManager.LoadScene(0);
 		}
-	}
-
+    }
 }

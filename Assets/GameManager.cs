@@ -11,25 +11,27 @@ public class GameManager : MonoBehaviour
     private int currRoomNumber = 0;
 
     // Start is called before the first frame update
-    void Start()
-    {
+    void Start(){
         
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+		if (Input.GetKeyDown(KeyCode.Escape)) {
+			Debug.Log("Pause");
+		}
     }
 
     public void ChangeRoom() {
-        if (currRoomNumber < roomPrefabs.Count)
+        if (++currRoomNumber < roomPrefabs.Count)
         {
             Destroy(currentRoom);
-            currentRoom = Instantiate(roomPrefabs[++currRoomNumber]);
+            currentRoom = Instantiate(roomPrefabs[currRoomNumber]);
         }
         else {
-            //TODO: Win
+			//TODO: Win
+			Debug.Log("Bruh, you won!");
         }
     }
 }

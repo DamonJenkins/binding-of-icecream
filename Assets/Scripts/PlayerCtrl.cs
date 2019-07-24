@@ -29,7 +29,7 @@ public struct BulletParams
     public float MoveSpeed;
     public float Range;
     public int Damage;
-    public Effect[] Effects;
+    public List<Effect> Effects;
 }
 
 [System.Serializable]
@@ -37,7 +37,7 @@ public class CharaData
 {
 
     //public int charaset;
-    public float hp = 500;
+    public float maxHealth = 500;
     public float dmg;
     public float spd;
     public int guntype = 1;
@@ -48,12 +48,16 @@ public class PlayerCtrl : MonoBehaviour
 {
     public CharaData playerdata;
     public InputData m_Input;
+    float health;
     //Shoot
-    public BulletScript BulletPrefab;
-    public GameObject Cherry;
+    public GameObject BulletPrefab;
     private int bulletType = 0;
 
     private Vector2 direction = Vector2.right;
+
+	[SerializeField]
+	private float invulnerabilityTime;
+	private float invulnTimer = 0.0f;
 
     private float[] timers = { 0.0f, 0.0f, 0.0f };
     [SerializeField]
@@ -74,7 +78,7 @@ public class PlayerCtrl : MonoBehaviour
 
     [SerializeField]
     private Sprite[] dirSprites;
-
+    Cherry c;
     //ammo bar
     [SerializeField]
     public Image beambar, machinegunbar, riflebar; 
@@ -86,9 +90,7 @@ public class PlayerCtrl : MonoBehaviour
         {
             ammoCurrent[i] = ammoMax[i];
         }
-
     }
-    //void switchGun(int gun);
    
     void FireBullet()
     {
@@ -97,22 +99,14 @@ public class PlayerCtrl : MonoBehaviour
         ammoCurrent[bulletType] -= ammoConsumption[bulletType];
         timers[bulletType] = timerStarts[bulletType];
 
-        // CREATE
-        if (bulletType != 1)
-        {
-            var bullet = Instantiate(BulletPrefab, GetComponentInChildren<SpriteRenderer>().transform.position, transform.rotation, transform);
-        }
-        
-         else
-        {
-            Vector3 firespread = GetComponentInChildren<SpriteRenderer>().transform.position;
-            firespread.x += Random.Range(-0.3f, 0.3f);
-            firespread.y += Random.Range(-0.3f, 0.3f);
-            Vector3 fireangle = GetComponentInChildren<SpriteRenderer>().transform.rotation.eulerAngles;
-            fireangle.x += Random.Range(-0.4f, 0.4f);
-            fireangle.y += Random.Range(-0.4f, 0.4f);
+        var bullet = Instantiate(BulletPrefab, GetComponentInChildren<SpriteRenderer>().transform.position, transform.rotation, transform);
 
-            var bullet = Instantiate(BulletPrefab, firespread,Quaternion.Euler(firespread), transform);
+        if (bulletType == 2)
+        {
+            c = new Cherry(bullet, 5, 2.0f, 2.5f);
+            c.SetOwner(bullet);
+            bullet.GetComponent<BulletScript>().bulletInfo.Effects.Clear();
+            bullet.GetComponent<BulletScript>().bulletInfo.Effects.Add(c);
         }
     }
     // Update is called once per frame
@@ -157,17 +151,10 @@ public class PlayerCtrl : MonoBehaviour
         {
             direction = (Vector2.right * Input.GetAxis("FireX")).normalized;
 
-            //if(bulletType == 1)
-            //{
-            //   direction.y += Random.Range(-0.4f,0.4f);
-            //    //direction = direction.normalized;
-            //}
             if (bulletType == 1)
             {
                 Quaternion spreadangle = Quaternion.Euler(0.0f, 0.0f, Random.Range(-10.0f, 10.0f));
                 direction = spreadangle * direction;
-                //direction.x += Random.Range(-0.4f, 0.4f);
-                //direction = direction.normalized;
             }
             if (bulletType != 3)
             {
@@ -185,8 +172,6 @@ public class PlayerCtrl : MonoBehaviour
             {
                 Quaternion spreadangle = Quaternion.Euler(0.0f, 0.0f, Random.Range(-10.0f, 10.0f));
                 direction = spreadangle * direction;
-                //direction.x += Random.Range(-0.4f, 0.4f);
-                //direction = direction.normalized;
             }
             if (bulletType != 3)
             {
@@ -215,6 +200,8 @@ public class PlayerCtrl : MonoBehaviour
             }
         }
 
+		invulnTimer -= Time.deltaTime;
+
         for (int i = 0; i < 3; i++) {
             timers[i] -= Time.deltaTime;
             if( timers[i] < -ammoRegenDelay[i])
@@ -241,15 +228,16 @@ public class PlayerCtrl : MonoBehaviour
         return direction;
     }
 
-    public void gotBoomed()
+    public void DealDamage(float damage)
     {
-        playerdata.hp -= 100;
-    }
+		if (invulnTimer <= 0.0f)
+		{
+			health -= damage;
+			invulnTimer = invulnerabilityTime;
+			Debug.Log(health);
 
-    public void spawnCherry()
-    {
-        Cherry = Instantiate(Cherry, transform.position, transform.rotation, transform);
-        Destroy(Cherry, 2.1f);
-        Cherry oofcherry = new Cherry(transform.position, 2.0f);
-    }
+			//TODO: Add animation
+		}
+	}
+
 }

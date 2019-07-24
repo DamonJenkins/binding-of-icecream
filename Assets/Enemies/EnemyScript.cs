@@ -22,7 +22,7 @@ public class EnemyScript : MonoBehaviour
         for (int i = 0; i < CurrentEffects.Count;)
         {
             //Perform effect action
-            CurrentEffects[i].Update(GetComponent<EnemyScript>());
+            CurrentEffects[i].Update();
 
             //Remove effect if expired
             if (CurrentEffects[i].GetDuration() <= 0.0f)
@@ -51,19 +51,24 @@ public class EnemyScript : MonoBehaviour
         BulletScript bulletScript = bullet.GetComponent<BulletScript>();
 
         //Deal damage
-        health -= bulletScript.bulletInfo.Damage;
+        DealDamage(bulletScript.bulletInfo.Damage);
 
+        Debug.Log("Aaerothaieurtho");
+        Debug.Log(bulletScript.bulletInfo.Effects.Count);
         //Add all effects
         foreach (Effect e in bulletScript.bulletInfo.Effects)
         {
+            Debug.Log("Adding effects");
             CurrentEffects.Add(e);
+            CurrentEffects[CurrentEffects.Count - 1].SetOwner(gameObject);
         }
         //Remove bullet
         Destroy(bullet);
     }
 
-    public void GotBoomed()
+    public void DealDamage(int damage)
     {
-        health -= 40;
+        health -= damage;
     }
+
 }
