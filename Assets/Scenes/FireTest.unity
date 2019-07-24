@@ -492,8 +492,7 @@ MonoBehaviour:
     ShootL: 276
     ShootUp: 273
     ShootDown: 274
-  BulletPrefab: {fileID: 1024669675226095881, guid: bbca455e024a02342a3dcde070877218,
-    type: 3}
+  BulletPrefab: {fileID: 0}
   timerStarts:
   - 0.01
   - 0.3
@@ -520,13 +519,18 @@ MonoBehaviour:
   - 100
   - 20
   ammoRegenRate:
-  - 125
-  - 6
-  - 2
+  - 10
+  - 20
+  - 1
   ammoConsumption:
+  - 2
+  - 5
   - 1
-  - 1
-  - 1
+  ammoRegenDelay:
+  - 2.2
+  - 1.7
+  - 4
+  dirSprites: []
   beambar: {fileID: 1224870668}
   machinegunbar: {fileID: 1388381250}
   riflebar: {fileID: 1583242506}
