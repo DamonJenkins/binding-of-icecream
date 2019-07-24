@@ -23,14 +23,6 @@ public class InputData
 
 }
 
-[System.Serializable]
-public struct BulletParams
-{
-    public float MoveSpeed;
-    public float Range;
-    public int Damage;
-    public Effect[] Effects;
-}
 
 [System.Serializable]
 public class CharaData
@@ -49,161 +41,122 @@ public class PlayerCtrl : MonoBehaviour
     public CharaData playerdata;
     public InputData m_Input;
     //Shoot
-    public BulletTest BulletPrefab;
-    private int bulletType = 0;
-
-    private Vector2 direction = Vector2.right;
-
-    private float[] timers = { 0.0f, 0.0f, 0.0f };
-    [SerializeField]
-    private float[] timerStarts = { 1.0f, 1.0f, 1.0f }; // fire rate
-    [SerializeField]
-    private BulletParams[] Bullets; // set of different guns
-    // ammo data
-    [SerializeField]
-    private float[] ammoMax;
-    [SerializeField]
-    private float[] ammoCurrent;
-    [SerializeField]
-    private float[] ammoRegenRate;
-    [SerializeField]
-    private float[] ammoConsumption;
-
-
-    //ammo bar
-    [SerializeField]
-    public Image beambar, machinegunbar, riflebar; 
+    public BulletTest Bullet;
+  
+    // public GameObject Bullet1;
+    //public GameObject Bullet2;
+    private float nextFire = 0.4f;
+    private float myTime = 0.0F;
+    public float fireDelta = 0.4f;
     // Start is called before the first frame update
     void Start()
     {
-        ammoCurrent = new float[ammoMax.Length];
-        for(int i = 0; i < ammoMax.Length; i++)
-        {
-            ammoCurrent[i] = ammoMax[i];
-        }
-
+        
     }
     //void switchGun(int gun);
    
-    void FireBullet()
+    void FireBullet(KeyCode dir,int ammo)
     {
-        if (ammoCurrent[bulletType] <= ammoConsumption[bulletType] || timers[bulletType] >= 0) return;
+        // CREATE
+        var bullet = Instantiate(Bullet, transform.position, transform.rotation);
 
-        ammoCurrent[bulletType] -= ammoConsumption[bulletType];
-        timers[bulletType] = timerStarts[bulletType];
+        // DIRECTION
+        Vector2 direction = Vector2.right;
+        if (dir == m_Input.ShootR)
+        {
+            direction = Vector2.right;
+        }
+        else if (dir == m_Input.ShootL)
+        {
+            direction = Vector2.left;
+        }
+        else if (dir == m_Input.ShootUp)
+        {
+            direction = Vector2.up;
+        }
+        else if (dir == m_Input.ShootDown)
+        {
+            direction = Vector2.down;
+        }
+
+
+
 
         // CREATE
-        if (bulletType != 1)
-        {
-            var bullet = Instantiate(BulletPrefab, GetComponentInChildren<SpriteRenderer>().transform.position, transform.rotation, transform);
-        }
-        
-         else
-        {
-            Vector3 firespread = GetComponentInChildren<SpriteRenderer>().transform.position;
-            firespread.x += Random.Range(-0.3f, 0.3f);
-            firespread.y += Random.Range(-0.3f, 0.3f);
-            Vector3 fireangle = GetComponentInChildren<SpriteRenderer>().transform.rotation.eulerAngles;
-            fireangle.x += Random.Range(-0.4f, 0.4f);
-            fireangle.y += Random.Range(-0.4f, 0.4f);
+        bullet.Create(this.gameObject, direction);
 
-            var bullet = Instantiate(BulletPrefab, firespread,Quaternion.Euler(firespread), transform);
-        }
+        // NEXT FIRE
+        nextFire = fireDelta;
+        myTime = 0.0f;
     }
     // Update is called once per frame
     void Update()
     {
-        //Movement
-
-        float velThisFrame = playerdata.spd;
-
-        if (Input.GetButton("Horizontal") && Input.GetButton("Vertical"))
-        {
-            velThisFrame *= 0.707f;
-        }
-
-        GetComponentInChildren<Rigidbody2D>().velocity = new Vector3(
-            Input.GetAxis("Horizontal"),
-            Input.GetAxis("Vertical")
-        ) * velThisFrame;
-
         //switch gun
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        if(Input.GetKeyDown(KeyCode.Alpha1))
         {
-            //dot(beam)
-            bulletType = 0;
-           
+            switchGun(1);
         }
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            bulletType = 1;
+            switchGun(2);
         }
+
         if (Input.GetKeyDown(KeyCode.Alpha3))
         {
-            bulletType = 2;
+            switchGun(3);
         }
-
-        // DIRECTION
-        if (Input.GetButton("FireX"))
-        {
-            direction = (Vector2.right * Input.GetAxis("FireX")).normalized;
-
-            //if(bulletType == 1)
-            //{
-            //   direction.y += Random.Range(-0.4f,0.4f);
-            //    //direction = direction.normalized;
-            //}
-            if (bulletType == 1)
+        //Shoot
+        myTime = myTime + Time.deltaTime;
+      
+            // SHOOT
+            if (Input.GetKeyDown(m_Input.ShootR) && myTime > nextFire)
             {
-                Quaternion spreadangle = Quaternion.Euler(0.0f, 0.0f, Random.Range(-10.0f, 10.0f));
-                direction = spreadangle * direction;
-                //direction.x += Random.Range(-0.4f, 0.4f);
-                //direction = direction.normalized;
+            FireBullet(m_Input.ShootR, 1);
+            
             }
-            FireBullet();
-        }
-        if (Input.GetButton("FireY"))
-        {
-            direction = (Vector2.up * Input.GetAxis("FireY")).normalized;
-            if (bulletType == 1)
-            {
-                Quaternion spreadangle = Quaternion.Euler(0.0f, 0.0f, Random.Range(-10.0f, 10.0f));
-                direction = spreadangle * direction;
-                //direction.x += Random.Range(-0.4f, 0.4f);
-                //direction = direction.normalized;
-            }
-            FireBullet();
-        }
 
-        for (int i = 0; i < 3; i++) {
-            timers[i] -= Time.deltaTime;
-            if (i != bulletType){
-                ammoCurrent[i] += ammoRegenRate[i] * Time.deltaTime;
-                ammoCurrent[i] = Mathf.Min(ammoMax[i], ammoCurrent[i]);
-            }
-            //uncomment this to enable ammo regen for current gun
-            //if (i == bulletType)
-            //{
-            //    ammoCurrent[i] += (ammoRegenRate[i] * Time.deltaTime * 0.5f);
-            //    ammoCurrent[i] = Mathf.Min(ammoMax[i], ammoCurrent[i]);
-            //}
+        if (Input.GetKeyDown(m_Input.ShootL) && myTime > nextFire)
+        {
+            FireBullet(m_Input.ShootL, 1);
+
         }
-        //ammo hud test
-        beambar.fillAmount = ammoCurrent[0] / ammoMax[0];
-        machinegunbar.fillAmount = ammoCurrent[1] / ammoMax[1];
-        riflebar.fillAmount = ammoCurrent[2] / ammoMax[2];
-        
+        if (Input.GetKeyDown(m_Input.ShootUp) && myTime > nextFire)
+        {
+            FireBullet(m_Input.ShootUp, 1);
+        }
+        if (Input.GetKeyDown(m_Input.ShootDown) && myTime > nextFire)
+        {
+
+            FireBullet(m_Input.ShootDown, 1);
+        }
 
     }
 
-    public BulletParams GetCurrentBulletType()
+    void switchGun(int gun)
     {
-        return Bullets[bulletType];
-    }
 
-    public Vector2 GetShotDirection()
-    {
-        return direction;
+        if (gun == 1)
+        {
+            //pistol
+            playerdata.dmg = 2.0f;
+            fireDelta = 0.4f;
+            print("pistol");
+        }
+        if (gun == 2)
+        {
+            //machineGun
+            playerdata.dmg = 1.0f;
+            fireDelta = 0.2f;
+            print("machinegun");
+        }
+        if (gun == 3)
+        {
+            //sniper
+            playerdata.dmg = 9.5f;
+            fireDelta = 1.6f;
+            print("sniper");
+        }
     }
 
 }

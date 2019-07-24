@@ -2,7 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Spikes : MonoBehaviour{
+public struct BulletParams
+{
+    public float MoveSpeed;
+    public float Range;
+    public int Damage;
+    public List<Effect> Effects;
+}
+
+public class BulletScript : MonoBehaviour
+{
+
+    public BulletParams bulletInfo;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -14,12 +26,4 @@ public class Spikes : MonoBehaviour{
     {
         
     }
-
-	void OnTriggerStay2D(Collider2D collider){
-		if (collider.name == "PlayerCollider") {
-            //Hurt the player
-
-		}
-	}
-
 }

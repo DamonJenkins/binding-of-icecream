@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
-public class Effect
+public abstract class Effect
 {
     float TimeLeft;
 
