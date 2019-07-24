@@ -13,6 +13,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MoveSpeed: 2
+  dirSprites:
+  - {fileID: 21300000, guid: 2226f69099fe2994abe4a53b082a3aea, type: 3}
+  - {fileID: 21300000, guid: 392fd0891791e244dac53d4166125e2b, type: 3}
+  - {fileID: 21300000, guid: 74a37258e9511ac48a149588270036ba, type: 3}
 --- !u!1001 &8047980346908715725
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -89,6 +93,22 @@ PrefabInstance:
         type: 3}
       propertyPath: playerTransform
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8215017297965925453, guid: 44cb1738530539a42b2bf103625b2511,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 392fd0891791e244dac53d4166125e2b,
+        type: 3}
+    - target: {fileID: 8215017297965925453, guid: 44cb1738530539a42b2bf103625b2511,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5961909309063847252, guid: 44cb1738530539a42b2bf103625b2511,
+        type: 3}
+      propertyPath: m_Offset.y
+      value: -0.34
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 4245623546510469254, guid: 44cb1738530539a42b2bf103625b2511, type: 3}

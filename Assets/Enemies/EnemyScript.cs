@@ -27,6 +27,7 @@ public class EnemyScript : MonoBehaviour
             //Remove effect if expired
             if( CurrentEffects[i].GetDuration() <= 0.0f)
             {
+                CurrentEffects[i].OnDestroy();
                 CurrentEffects.RemoveAt(i);
             }
             else

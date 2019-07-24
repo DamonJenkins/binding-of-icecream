@@ -11,14 +11,14 @@ public class Effect
         TimeLeft -= Time.deltaTime;
     }
 
-    public Effect(float Duration)
-    {
+    public Effect(float Duration){
         TimeLeft = Duration;
     }
 
-    public float GetDuration()
-    {
+    public float GetDuration(){
         return TimeLeft;
     }
+
+    public virtual void OnDestroy() { }
 
 }
