@@ -50,6 +50,7 @@ public class PlayerCtrl : MonoBehaviour
     public InputData m_Input;
     //Shoot
     public BulletScript BulletPrefab;
+    public GameObject Cherry;
     private int bulletType = 0;
 
     private Vector2 direction = Vector2.right;
@@ -146,6 +147,10 @@ public class PlayerCtrl : MonoBehaviour
         {
             bulletType = 2;
         }
+        if(Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            bulletType = 3;
+        }
 
         // DIRECTION
         if (Input.GetButton("FireX"))
@@ -164,7 +169,14 @@ public class PlayerCtrl : MonoBehaviour
                 //direction.x += Random.Range(-0.4f, 0.4f);
                 //direction = direction.normalized;
             }
-            FireBullet();
+            if (bulletType != 3)
+            {
+                FireBullet();
+            }
+            else
+            {
+                spawnCherry();
+            }
         }
         if (Input.GetButton("FireY"))
         {
@@ -176,7 +188,14 @@ public class PlayerCtrl : MonoBehaviour
                 //direction.x += Random.Range(-0.4f, 0.4f);
                 //direction = direction.normalized;
             }
-            FireBullet();
+            if (bulletType != 3)
+            {
+                FireBullet();
+            }
+            else
+            {
+                spawnCherry();
+            }
         }
 
         if (Input.GetButton("Horizontal"))
@@ -222,4 +241,15 @@ public class PlayerCtrl : MonoBehaviour
         return direction;
     }
 
+    public void gotBoomed()
+    {
+        playerdata.hp -= 100;
+    }
+
+    public void spawnCherry()
+    {
+        Cherry = Instantiate(Cherry, transform.position, transform.rotation, transform);
+        Destroy(Cherry, 2.1f);
+        Cherry oofcherry = new Cherry(transform.position, 2.0f);
+    }
 }

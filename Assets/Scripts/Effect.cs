@@ -19,6 +19,9 @@ public class Effect
         return TimeLeft;
     }
 
-    public virtual void OnDestroy() { }
+    public virtual void OnDestroy()
+    {
+        
+    }
 
 }

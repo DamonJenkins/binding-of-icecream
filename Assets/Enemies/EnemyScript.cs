@@ -62,4 +62,8 @@ public class EnemyScript : MonoBehaviour
         Destroy(bullet);
     }
 
+    public void GotBoomed()
+    {
+        health -= 40;
+    }
 }
