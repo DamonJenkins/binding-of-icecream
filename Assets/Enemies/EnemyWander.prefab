@@ -13,8 +13,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MoveSpeed: 2
+  forceStrength: 10
   wanderTimerMax: 2
   wanderTimerMin: 0.5
+  dirSprites:
+  - {fileID: 21300000, guid: eee8058f149fa224388ad3136ffdb12a, type: 3}
+  - {fileID: 21300000, guid: 1b00b984dc0f9bb4aab080ad7da7ef7f, type: 3}
+  - {fileID: 21300000, guid: 79a56b070949ef144a931f1c1617e2dd, type: 3}
 --- !u!1001 &8878584140673051056
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -25,7 +30,7 @@ PrefabInstance:
     - target: {fileID: 8215017297965925452, guid: 44cb1738530539a42b2bf103625b2511,
         type: 3}
       propertyPath: m_Name
-      value: Enemy Variant
+      value: EnemyWander
       objectReference: {fileID: 0}
     - target: {fileID: 8215017297965925451, guid: 44cb1738530539a42b2bf103625b2511,
         type: 3}
@@ -81,6 +86,22 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8215017297965925453, guid: 44cb1738530539a42b2bf103625b2511,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 1b00b984dc0f9bb4aab080ad7da7ef7f,
+        type: 3}
+    - target: {fileID: 8215017297965925453, guid: 44cb1738530539a42b2bf103625b2511,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5961909309063847252, guid: 44cb1738530539a42b2bf103625b2511,
+        type: 3}
+      propertyPath: m_Offset.y
+      value: -0.35
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 44cb1738530539a42b2bf103625b2511, type: 3}
