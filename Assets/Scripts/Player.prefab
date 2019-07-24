@@ -59,7 +59,7 @@ MonoBehaviour:
     ShootL: 0
     ShootUp: 0
     ShootDown: 0
-  BulletPrefab: {fileID: 1024669675226095881, guid: bbca455e024a02342a3dcde070877218,
+  BulletPrefab: {fileID: 1024669675226095882, guid: bbca455e024a02342a3dcde070877218,
     type: 3}
   invulnerabilityTime: 0.5
   timerStarts:
@@ -77,7 +77,7 @@ MonoBehaviour:
     Effects: []
   - MoveSpeed: 14
     Range: 15
-    Damage: 120
+    Damage: 1
     Effects: []
   ammoMax:
   - 100
