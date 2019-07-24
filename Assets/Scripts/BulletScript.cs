@@ -17,7 +17,7 @@ public class BulletScript : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        bulletInfo = GetComponentInParent<PlayerCtrl>().GetCurrentBulletType();
+        //bulletInfo = GetComponentInParent<PlayerCtrl>().GetCurrentBulletType();
         direction = GetComponentInParent<PlayerCtrl>().GetShotDirection();
         ownertag = transform.parent.tag;
 

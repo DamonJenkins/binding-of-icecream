@@ -10,7 +10,6 @@ public class Effect
 
     public void Update() {
         TimeLeft -= Time.deltaTime;
-        Debug.Log(TimeLeft);
     }
 
     public Effect(float Duration, GameObject _owner){

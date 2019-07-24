@@ -100,6 +100,7 @@ public class PlayerCtrl : MonoBehaviour
         timers[bulletType] = timerStarts[bulletType];
 
         var bullet = Instantiate(BulletPrefab, GetComponentInChildren<SpriteRenderer>().transform.position, transform.rotation, transform);
+        bullet.GetComponent<BulletScript>().bulletInfo = GetCurrentBulletType();
 
         if (bulletType == 2)
         {

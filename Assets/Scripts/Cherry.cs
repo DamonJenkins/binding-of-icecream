@@ -55,9 +55,12 @@ public class Cherry : Effect
 
         foreach (GameObject player in GameObject.FindGameObjectsWithTag("Player"))
         {
-            if (Vector3.Distance(self, player.transform.GetChild(0).transform.position) < cherryRadius)
+            if (player.transform.childCount > 0)
             {
-                player.GetComponent<PlayerCtrl>().DealDamage(cherryDamage);
+                if (Vector3.Distance(self, player.transform.GetChild(0).transform.position) < cherryRadius)
+                {
+                    player.GetComponent<PlayerCtrl>().DealDamage(cherryDamage);
+                }
             }
         }
     }
