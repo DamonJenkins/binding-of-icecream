@@ -4,26 +4,21 @@ using UnityEngine;
 
 public class Cherry : Effect
 {
-    string cherryName;
     int cherryDamage; 
     float cherryRadius;
-    public Cherry(int _cherryDamage, float _cherryRadius, float duration) : base (duration)
+    public Cherry(GameObject owner, int _cherryDamage, float _cherryRadius, float duration) : base (duration, owner)
     {
         cherryDamage = _cherryDamage;
         cherryRadius = _cherryRadius;
     }
 
-    public Cherry(Cherry other) : base(other.GetDuration())
+    public Cherry(Cherry other) : base(other.GetDuration(), other.GetOwner())
     {
         cherryDamage = other.cherryDamage;
         cherryRadius = other.cherryRadius;
-        cherryName = other.cherryName;
     }
 
-    public void SetName(string _cherryName)
-    {
-        cherryName = _cherryName;
-    }
+   
 
     public void SetCherryDamage(int _cherryDamage)
     {
@@ -35,10 +30,7 @@ public class Cherry : Effect
         cherryRadius = _cherryRadius;
     }
 
-    public string GetName()
-    {
-        return cherryName;
-    }
+    
 
     public int GetCherryDamage()
     {
@@ -52,7 +44,7 @@ public class Cherry : Effect
 
     public override void OnDestroy()
     {
-        Vector3 self = GameObject.Find(cherryName).transform.position;
+        Vector3 self = owner.transform.position;
         foreach(GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy"))
         {
             if( Vector3.Distance(self, enemy.transform.position) < cherryRadius)
